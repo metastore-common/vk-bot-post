@@ -13,7 +13,7 @@ require_once( __DIR__ . '/settings/settings.php' );
 function vkUserWallPost() {
 	$vk  = new Vk( apiConfig() );
 	$set = extSettings();
-	$dir = __DIR__ . 'storage/user/images/';
+	$dir = __DIR__ . '/storage/user/images/';
 
 	if ( isDirEmpty( $dir ) ) {
 		return false;
