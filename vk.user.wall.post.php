@@ -1,8 +1,8 @@
 <?php
 
 require_once( 'engine/api/vk.php' );
-require_once( 'settings/settings.php' );
 require_once( 'engine/functions/common.php' );
+require_once( 'settings/settings.php' );
 
 /**
  * Posting to user wall.
