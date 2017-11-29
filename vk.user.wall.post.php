@@ -1,8 +1,8 @@
 <?php
 
-require_once( 'engine/api/vk.php' );
-require_once( 'engine/functions/common.php' );
-require_once( 'settings/settings.php' );
+require_once( __DIR__ . '/engine/api/vk.php' );
+require_once( __DIR__ . '/engine/functions/common.php' );
+require_once( __DIR__ . '/settings/settings.php' );
 
 /**
  * Posting to user wall.
@@ -13,7 +13,7 @@ require_once( 'settings/settings.php' );
 function vkUserWallPost() {
 	$vk  = new Vk( apiConfig() );
 	$set = extSettings();
-	$dir = 'storage/user/images/';
+	$dir = __DIR__ . 'storage/user/images/';
 
 	if ( isDirEmpty( $dir ) ) {
 		return false;
