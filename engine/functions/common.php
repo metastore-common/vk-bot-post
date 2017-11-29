@@ -9,8 +9,9 @@
  * ------------------------------------------------------------------------------------------------------------------ */
 
 function isDirEmpty( $dir ) {
-	$iterator   = new FilesystemIterator( $dir );
-	$isDirEmpty = ! $iterator->valid();
+	if ( ! is_readable( $dir ) ) {
+		return null;
+	}
 
-	return $isDirEmpty;
+	return ( count( scandir( $dir ) ) == 2 );
 }
