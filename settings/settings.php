@@ -7,11 +7,13 @@
  * ------------------------------------------------------------------------------------------------------------------ */
 
 function apiConfig() {
-	$config['secret_key']   = '';
-	$config['client_id']    = '';
-	$config['user_id']      = '';
-	$config['access_token'] = '';
-	$config['scope']        = 'wall,photos,friends,groups';
+	$config = [
+		'secret_key'   => '',
+		'client_id'    => '',
+		'user_id'      => '',
+		'access_token' => '',
+		'scope'        => 'wall,photos,friends,groups',
+	];
 
 	return $config;
 }
@@ -26,19 +28,26 @@ function extSettings() {
 	// Get API settings.
 	$cfg = apiConfig();
 
-	// Group settings.
-	$setting['group']['owner_id']   = '';
-	$setting['group']['from_group'] = '1';
-	$setting['group']['signed']     = '0';
-	$setting['group']['message']    = 'group api demo';
-	$setting['group']['tags']       = '#vk_api_group';
-	$setting['group']['link']       = '';
-
-	// User settings.
-	$setting['user']['owner_id'] = $cfg['user_id'];
-	$setting['user']['message']  = 'user api demo';
-	$setting['user']['tags']     = '#vk_api_user';
-	$setting['user']['link']     = '';
+	$setting = [
+		// Group settings.
+		'group' => [
+			'owner_id'   => '',
+			'from_group' => '1',
+			'signed'     => '0',
+			'message'    => 'group api demo',
+			'tags'       => '#vk_api_group',
+			'link'       => '',
+			'dir'        => '/storage/group/images/',
+		],
+		// User settings.
+		'user'  => [
+			'owner_id' => $cfg['user_id'],
+			'message'  => 'user api demo',
+			'tags'     => '#vk_api_user',
+			'link'     => '',
+			'dir'      => '/storage/user/images/',
+		],
+	];
 
 	return $setting;
 }

@@ -13,7 +13,7 @@ require_once( __DIR__ . '/settings/settings.php' );
 function vkGroupWallPost() {
 	$vk  = new Vk( apiConfig() );
 	$set = extSettings();
-	$dir = __DIR__ . '/storage/group/images/';
+	$dir = __DIR__ . $set['group']['dir'];
 
 	if ( isDirEmpty( $dir ) ) {
 		return false;
