@@ -3,13 +3,11 @@
 require_once( __DIR__ . '/engine/api/vk.php' );
 require_once( __DIR__ . '/settings/settings.php' );
 
-/**
- * Class VK_WallPost
- */
+
 class VK_WallPost {
 
-	private $vk;
-	private $set;
+	private $vk;    // VK API.
+	private $set;   // Settings.
 
 	/**
 	 * VK_WallPost constructor.
@@ -95,8 +93,10 @@ class VK_WallPost {
 	}
 }
 
+// Loading class.
 $VK_WallPost = new VK_WallPost();
 
+// CMD options.
 $cmdOpt = getopt( 'p:' );
 
 if ( isset( $cmdOpt['p'] ) ) {

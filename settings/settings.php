@@ -13,6 +13,7 @@ function apiConfig() {
 		'user_id'      => '',
 		'access_token' => '',
 		'scope'        => 'wall,photos,friends,groups',
+		'v'            => '5.69',
 	];
 
 	return $config;
