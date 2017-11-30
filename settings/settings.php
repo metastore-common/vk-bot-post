@@ -6,7 +6,7 @@
  * @return array
  * ------------------------------------------------------------------------------------------------------------------ */
 
-function apiConfig() {
+function api_config() {
 	$config = [
 		'secret_key'   => '',
 		'client_id'    => '',
@@ -25,9 +25,9 @@ function apiConfig() {
  * @return array
  * ------------------------------------------------------------------------------------------------------------------ */
 
-function extSettings() {
+function settings() {
 	// Get API settings.
-	$cfg = apiConfig();
+	$api = api_config();
 
 	$setting = [
 		// Group settings.
@@ -42,7 +42,7 @@ function extSettings() {
 		],
 		// User settings.
 		'user'  => [
-			'owner_id' => $cfg['user_id'],
+			'owner_id' => $api['user_id'],
 			'message'  => 'user api demo',
 			'tags'     => '#vk_api_user',
 			'link'     => '',
