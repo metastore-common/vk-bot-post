@@ -41,7 +41,7 @@ class WallPost {
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function groupWallPost() {
-		$dir = __DIR__ . $this->setting['group']['dir'];
+		$dir = $this->setting['group']['dir'];
 
 		if ( self::isDirEmpty( $dir ) ) {
 			return false;
@@ -71,7 +71,7 @@ class WallPost {
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function userWallPost() {
-		$dir = __DIR__ . $this->setting['user']['dir'];
+		$dir = $this->setting['user']['dir'];
 
 		if ( self::isDirEmpty( $dir ) ) {
 			return false;

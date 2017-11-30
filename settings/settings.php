@@ -38,7 +38,7 @@ function settings() {
 			'message'    => 'group api demo',
 			'tags'       => '#vk_api_group',
 			'link'       => '',
-			'dir'        => '/storage/group/images/',
+			'dir'        => dirname( __FILE__, 1 ) . '/storage/group/images/',
 		],
 		// User settings.
 		'user'  => [
@@ -46,7 +46,7 @@ function settings() {
 			'message'  => 'user api demo',
 			'tags'     => '#vk_api_user',
 			'link'     => '',
-			'dir'      => '/storage/user/images/',
+			'dir'      => dirname( __FILE__, 1 ) . '/storage/user/images/',
 		],
 	];
 
