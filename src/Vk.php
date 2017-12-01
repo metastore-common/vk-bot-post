@@ -33,19 +33,24 @@ class Vk {
 	private $_api_scope = '';
 
 	/**
-	 * Это Конструктор (Кэп.)
-	 * Передаются параметры настроек
+	 * Vk constructor.
 	 *
 	 * @param array $options
-	 */
+	 * -------------------------------------------------------------------------------------------------------------- */
+
 	function __construct( $options = [] ) {
-
 		$this->scope[] = 'offline'; // обязательно запрашиваем права на оффлайн работу без участия пользователя
-
-		$this->set_options( $options );
+		$this->setOptions( $options );
 	}
 
-	// Magic Method (*__*)
+	/**
+	 * Call.
+	 *
+	 * @param $method
+	 * @param $params
+	 *
+	 * @return bool|mixed|string
+	 */
 	function __call( $method, $params ) {
 		if ( ! isset( $params[0] ) ) {
 			$params[0] = [];
@@ -54,6 +59,13 @@ class Vk {
 		return $this->api( $this->_api_scope . '.' . $method, $params[0] );
 	}
 
+	/**
+	 * Get.
+	 *
+	 * @param $name
+	 *
+	 * @return $this
+	 */
 	function __get( $name ) {
 		$this->_api_scope = $name;
 
@@ -61,20 +73,19 @@ class Vk {
 	}
 
 	/**
-	 * Выполнение вызова Api метода
+	 * Get API.
 	 *
-	 * @param string $method - метод, http://vk.com/dev/methods
-	 * @param array $vars - параметры метода
+	 * @param string $method
+	 * @param array $vars
 	 *
-	 * @return array - выводит массив данных или ошибку (но тоже в массиве)
-	 */
-	public function api( $method = '', array $vars = [] ) {
+	 * @return bool|mixed|string
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	public function api( $method = '', array $vars = [] ) {
 		$vars['v']            = $this->v;
 		$vars['access_token'] = $this->access_token;
-
-		$params = http_build_query( $vars );
-		$url    = $this->http_build_query( $method, $params );
+		$params               = http_build_query( $vars );
+		$url                  = $this->httpBuildQuery( $method, $params );
 
 		// Для тестирования и отладки запросов
 		if ( $this->debug ) {
@@ -84,33 +95,42 @@ class Vk {
 		return $this->call( $url );
 	}
 
+	/**
+	 * Execute.
+	 *
+	 * @param $code
+	 *
+	 * @return bool|mixed|string
+	 */
 	public function execute( $code ) {
 		return $this->api( 'execute', array( 'code' => $code ) );
 	}
 
 	/**
-	 * Построение конечного URI для выхова
+	 * Build URI.
 	 *
 	 * @param $method
 	 * @param string $params
 	 *
 	 * @return string
-	 */
-	private function http_build_query( $method, $params = '' ) {
+	 * -------------------------------------------------------------------------------------------------------------- */
+
+	private function httpBuildQuery( $method, $params = '' ) {
 		return self::METHOD_URL . $method . '?' . $params;
 	}
 
 	/**
-	 * Получить ссылка на запрос прав доступа
+	 * Get token code.
 	 *
-	 * @param string $type тип ответа (code - одноразовый код авторизации , token - готовый access token)
-	 * @param string callback url
+	 * @param string $type
+	 * @param string $callback
 	 *
-	 * @return mixed
-	 */
-	public function get_code_token( $type = "token", $callback = self::CALLBACK_BLANK ) {
+	 * @return string
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	public function getCodeToken( $type = "token", $callback = self::CALLBACK_BLANK ) {
 		$url = self::AUTHORIZE_URL;
+
 		$url .= http_build_query( array(
 			'response_type' => $type,
 			'client_id'     => $this->client_id,
@@ -123,8 +143,15 @@ class Vk {
 		return $url;
 	}
 
-	public function get_access_token( $code, $callback = self::CALLBACK_BLANK ) {
-
+	/**
+	 * Get token access.
+	 *
+	 * @param $code
+	 * @param string $callback
+	 *
+	 * @return bool|mixed|string
+	 * -------------------------------------------------------------------------------------------------------------- */
+	public function getAccessToken( $code, $callback = self::CALLBACK_BLANK ) {
 		$url = self::GET_TOKEN_URL;
 
 		$url .= http_build_query( array(
@@ -139,10 +166,17 @@ class Vk {
 		return $this->call( $url );
 	}
 
-	private function call( $url = '' ) {
+	/**
+	 * Call.
+	 *
+	 * @param string $url
+	 *
+	 * @return bool|mixed|string
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	private function call( $url = '' ) {
 		if ( function_exists( 'curl_init' ) ) {
-			$json = $this->curl_post( $url );
+			$json = $this->curlPost( $url );
 		} else {
 			$json = file_get_contents( $url );
 		}
@@ -151,7 +185,6 @@ class Vk {
 
 		// Произошла ошибка на стороне VK, коды ошибок тут https://vk.com/dev/errors
 		if ( isset( $json['error'], $json['error']['error_msg'], $json['error']['error_code'] ) ) {
-
 			throw new \VkException( $json['error']['error_msg'], $json['error']['error_code'] );
 		}
 
@@ -162,11 +195,15 @@ class Vk {
 		return $json;
 	}
 
-	/*
-	  Send cURL POST request
-	*/
-	private function curl_post( $url ) {
+	/**
+	 * Send cURL POST request.
+	 *
+	 * @param $url
+	 *
+	 * @return bool|mixed
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	private function curlPost( $url ) {
 		if ( ! function_exists( 'curl_init' ) ) {
 			return false;
 		}
@@ -192,10 +229,12 @@ class Vk {
 	}
 
 	/**
+	 * Set options.
+	 *
 	 * @param array $options
-	 */
-	public function set_options( $options = [] ) {
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	public function setOptions( $options = [] ) {
 		if ( count( $options ) > 0 ) {
 			foreach ( $options as $key => $value ) {
 				if ( $key == 'scope' && is_string( $value ) ) {
@@ -207,23 +246,25 @@ class Vk {
 
 			}
 		}
-
 	}
 
 	/**
-	 * @param bool $gid
+	 * Upload photo.
+	 *
+	 * @param int $gid
 	 * @param array $files
-	 * @param bool (TRUE = вернуть список id файлов | FALSE = вернуть массив аттачей для прикрепления)
-	 * @param array $additional_data {latitude, longitude, caption}
-	 * @param int $usleep сколько спать в микросекундах между запросами
+	 * @param bool $return_ids
+	 * @param array $additional_data
+	 * @param int $usleep
 	 *
 	 * @return array|bool
-	 */
-	public function upload_photo( $gid = 0, array $files = [], $return_ids = false, array $additional_data = [], $usleep = 0 ) {
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	public function uploadPhoto( $gid = 0, array $files = [], $return_ids = false, array $additional_data = [], $usleep = 0 ) {
 		if ( count( $files ) == 0 ) {
 			return false;
 		}
+
 		if ( ! function_exists( 'curl_init' ) ) {
 			return false;
 		}
@@ -240,7 +281,6 @@ class Vk {
 		$attachments = [];
 
 		foreach ( $temp as $chunk_index => $temp_chunk ) {
-
 			if ( $chunk_index ) {
 				usleep( $usleep );
 			}
@@ -256,8 +296,7 @@ class Vk {
 			}
 
 			$upload_url = $data_json['upload_url'];
-
-			$ch = curl_init( $upload_url );
+			$ch         = curl_init( $upload_url );
 
 			curl_setopt( $ch, CURLOPT_HTTPHEADER, array( "Content-type: multipart/form-data" ) );
 			curl_setopt( $ch, CURLOPT_HEADER, 0 );
@@ -266,20 +305,16 @@ class Vk {
 			curl_setopt( $ch, CURLOPT_POSTFIELDS, $files );
 			curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
 
-			$upload_data = json_decode( curl_exec( $ch ), true );
-
+			$upload_data             = json_decode( curl_exec( $ch ), true );
 			$upload_data['group_id'] = intval( $gid );
-
-			$upload_data += $additional_data;
+			$upload_data             += $additional_data;
 
 			usleep( $usleep );
 
 			$response = $this->api( 'photos.saveWallPhoto', $upload_data );
 
 			if ( count( $response ) > 0 ) {
-
 				foreach ( $response as $photo ) {
-
 					if ( $return_ids ) {
 						$attachments[] = $photo['id'];
 					} else {
@@ -295,18 +330,19 @@ class Vk {
 	}
 
 	/**
-	 * Заливка документа (например GIF файл)
+	 * Upload docs.
 	 *
 	 * @param bool $gid
 	 * @param $file
 	 *
 	 * @return bool|string
-	 */
-	public function upload_doc( $gid = false, $file ) {
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	public function uploadDoc( $gid = false, $file ) {
 		if ( ! is_string( $file ) ) {
 			return false;
 		}
+
 		if ( ! function_exists( 'curl_init' ) ) {
 			return false;
 		}
@@ -318,16 +354,14 @@ class Vk {
 		}
 
 		$attachment = false;
-
-		$path = realpath( $file );
+		$path       = realpath( $file );
 
 		if ( ! $path ) {
 			return false;
 		}
 
 		$files['file'] = ( class_exists( 'CURLFile', false ) ) ? new \CURLFile( $file ) : '@' . $file;
-
-		$upload_url = $data_json['upload_url'];
+		$upload_url    = $data_json['upload_url'];
 
 		$ch = curl_init( $upload_url );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, array( "Content-type: multipart/form-data" ) );
@@ -338,13 +372,10 @@ class Vk {
 		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
 
 		$upload_data = json_decode( curl_exec( $ch ), true );
-
-		$response = $this->api( 'docs.save', $upload_data );
+		$response    = $this->api( 'docs.save', $upload_data );
 
 		if ( count( $response ) > 0 ) {
-
 			foreach ( $response as $photo ) {
-
 				$attachment = 'doc' . $photo['owner_id'] . '_' . $photo['did'];
 			}
 		}
@@ -355,7 +386,7 @@ class Vk {
 
 	/**
 	 *
-	 * Заливка видео
+	 * Upload video.
 	 *
 	 * http://vk.com/dev/video.save
 	 *
@@ -363,12 +394,13 @@ class Vk {
 	 * @param bool $file
 	 *
 	 * @return bool|string
-	 */
-	public function upload_video( $options = [], $file = false ) {
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	public function uploadVideo( $options = [], $file = false ) {
 		if ( ! is_array( $options ) ) {
 			return false;
 		}
+
 		if ( ! function_exists( 'curl_init' ) ) {
 			return false;
 		}
@@ -380,7 +412,6 @@ class Vk {
 		}
 
 		$attachment = 'video' . $data_json['owner_id'] . '_' . $data_json['video_id'];
-
 		$upload_url = $data_json['upload_url'];
 		$ch         = curl_init( $upload_url );
 
@@ -406,7 +437,6 @@ class Vk {
 
 			// иначе просто обращаемся по адресу (ну надо так!)
 		} else {
-
 			curl_exec( $ch );
 		}
 
@@ -415,23 +445,21 @@ class Vk {
 	}
 
 	/**
-	 * Загружает видео из массива ссылок
+	 * Upload video from array.
 	 *
-	 * @param array $videos — массив ссылок на видео (youtube/vimeo)
+	 * @param array $videos
 	 *
-	 * @return array — массив загруженных видео (прикреплений) для использования при постинге
-	 */
-	public function uploadVideosFromArray( array $videos ) {
+	 * @return array
+	 * -------------------------------------------------------------------------------------------------------------- */
 
+	public function uploadVideosFromArray( array $videos ) {
 		$attached_videos = [];
 
 		foreach ( $videos as $i => $video_url ) {
-			$attached_videos[] = $this->upload_video(
-				[
-					'link'     => $video_url,
-					'wallpost' => 0
-				]
-			);
+			$attached_videos[] = $this->uploadVideo( [
+				'link'     => $video_url,
+				'wallpost' => 0
+			] );
 		}
 
 		return $attached_videos;

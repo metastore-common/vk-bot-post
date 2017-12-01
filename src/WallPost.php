@@ -49,7 +49,7 @@ class WallPost {
 			$file = scandir( $dir )[2];
 		}
 
-		$attach = $this->vk->upload_photo( 0, array( $dir . $file ) );
+		$attach = $this->vk->uploadPhoto( 0, array( $dir . $file ) );
 
 		$response = $this->vk->api( 'wall.post', array(
 			'owner_id'    => $this->setting['group']['owner_id'],
@@ -79,7 +79,7 @@ class WallPost {
 			$file = scandir( $dir )[2];
 		}
 
-		$attach = $this->vk->upload_photo( 0, array( $dir . $file ) );
+		$attach = $this->vk->uploadPhoto( 0, array( $dir . $file ) );
 
 		$response = $this->vk->api( 'wall.post', array(
 			'owner_id'    => $this->setting['user']['owner_id'],
