@@ -50,7 +50,9 @@ class Vk {
 	 * @param $params
 	 *
 	 * @return bool|mixed|string
+	 * @throws VkException
 	 */
+
 	function __call( $method, $params ) {
 		if ( ! isset( $params[0] ) ) {
 			$params[0] = [];
@@ -79,6 +81,7 @@ class Vk {
 	 * @param array $vars
 	 *
 	 * @return bool|mixed|string
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function api( $method = '', array $vars = [] ) {
@@ -101,7 +104,9 @@ class Vk {
 	 * @param $code
 	 *
 	 * @return bool|mixed|string
-	 */
+	 * @throws VkException
+	 * -------------------------------------------------------------------------------------------------------------- */
+
 	public function execute( $code ) {
 		return $this->api( 'execute', array( 'code' => $code ) );
 	}
@@ -150,7 +155,9 @@ class Vk {
 	 * @param string $callback
 	 *
 	 * @return bool|mixed|string
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
+
 	public function getAccessToken( $code, $callback = self::CALLBACK_BLANK ) {
 		$url = self::GET_TOKEN_URL;
 
@@ -172,6 +179,7 @@ class Vk {
 	 * @param string $url
 	 *
 	 * @return bool|mixed|string
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	private function call( $url = '' ) {
@@ -185,7 +193,7 @@ class Vk {
 
 		// Произошла ошибка на стороне VK, коды ошибок тут https://vk.com/dev/errors
 		if ( isset( $json['error'], $json['error']['error_msg'], $json['error']['error_code'] ) ) {
-			throw new \VkException( $json['error']['error_msg'], $json['error']['error_code'] );
+			throw new VkException( $json['error']['error_msg'], $json['error']['error_code'] );
 		}
 
 		if ( isset( $json['response'] ) ) {
@@ -258,6 +266,7 @@ class Vk {
 	 * @param int $usleep
 	 *
 	 * @return array|bool
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function uploadPhoto( $gid = 0, array $files = [], $return_ids = false, array $additional_data = [], $usleep = 0 ) {
@@ -336,6 +345,7 @@ class Vk {
 	 * @param $file
 	 *
 	 * @return bool|string
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function uploadDoc( $gid = false, $file ) {
@@ -394,6 +404,7 @@ class Vk {
 	 * @param bool $file
 	 *
 	 * @return bool|string
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function uploadVideo( $options = [], $file = false ) {
@@ -450,6 +461,7 @@ class Vk {
 	 * @param array $videos
 	 *
 	 * @return array
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function uploadVideosFromArray( array $videos ) {

@@ -5,7 +5,7 @@ require_once( __DIR__ . '/src/WallPost.php' );
 require_once( __DIR__ . '/settings/settings.php' );
 
 // Loading class.
-$VK_WallPost = new \METASTORE\VkBotPost\WallPost();
+$WallPost = new \METASTORE\VkBotPost\WallPost();
 
 // CMD options.
 $cmdOpt = getopt( 'p:' );
@@ -13,10 +13,10 @@ $cmdOpt = getopt( 'p:' );
 if ( isset( $cmdOpt['p'] ) ) {
 	switch ( $cmdOpt['p'] ) {
 		case 'group':
-			$VK_WallPost->groupWallPost();
+			$WallPost->groupWallPost();
 			break;
 		case 'user':
-			$VK_WallPost->userWallPost();
+			$WallPost->userWallPost();
 			break;
 		default:
 			return false;

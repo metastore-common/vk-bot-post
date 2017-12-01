@@ -37,7 +37,8 @@ class WallPost {
 	/**
 	 * Posting to group wall.
 	 *
-	 * @return array|bool
+	 * @return bool|mixed|string
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function groupWallPost() {
@@ -67,7 +68,8 @@ class WallPost {
 	/**
 	 * Posting to user wall.
 	 *
-	 * @return array|bool
+	 * @return bool|mixed|string
+	 * @throws VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function userWallPost() {
