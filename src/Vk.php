@@ -152,7 +152,7 @@ class Vk {
 		// Произошла ошибка на стороне VK, коды ошибок тут https://vk.com/dev/errors
 		if ( isset( $json['error'], $json['error']['error_msg'], $json['error']['error_code'] ) ) {
 
-			throw new VkException( $json['error']['error_msg'], $json['error']['error_code'] );
+			throw new \VkException( $json['error']['error_msg'], $json['error']['error_code'] );
 		}
 
 		if ( isset( $json['response'] ) ) {
@@ -251,7 +251,7 @@ class Vk {
 				$path = realpath( $data );
 
 				if ( $path ) {
-					$files[ 'file' . ( $key + 1 ) ] = ( class_exists( 'CURLFile', false ) ) ? new CURLFile( realpath( $data ) ) : '@' . realpath( $data );
+					$files[ 'file' . ( $key + 1 ) ] = ( class_exists( 'CURLFile', false ) ) ? new \CURLFile( realpath( $data ) ) : '@' . realpath( $data );
 				}
 			}
 
@@ -325,7 +325,7 @@ class Vk {
 			return false;
 		}
 
-		$files['file'] = ( class_exists( 'CURLFile', false ) ) ? new CURLFile( $file ) : '@' . $file;
+		$files['file'] = ( class_exists( 'CURLFile', false ) ) ? new \CURLFile( $file ) : '@' . $file;
 
 		$upload_url = $data_json['upload_url'];
 
@@ -399,7 +399,7 @@ class Vk {
 				return false;
 			}
 
-			$files['video_file'] = ( class_exists( 'CURLFile', false ) ) ? new CURLFile( $file ) : '@' . $file;
+			$files['video_file'] = ( class_exists( 'CURLFile', false ) ) ? new \CURLFile( $file ) : '@' . $file;
 
 			curl_setopt( $ch, CURLOPT_POSTFIELDS, $files );
 			curl_exec( $ch );
