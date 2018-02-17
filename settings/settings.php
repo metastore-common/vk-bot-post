@@ -3,6 +3,9 @@
 /**
  * API settings.
  *
+ * Get user access token:
+ * https://oauth.vk.com/authorize?response_type=token&client_id=XXXXX&redirect_uri=https%3A%2F%2Foauth.vk.com%2Fblank.html&display=page&version=5.69&scope=offline%2Cwall%2Cphotos%2Cfriends%2Cgroups
+ *
  * @return array
  * ------------------------------------------------------------------------------------------------------------------ */
 
@@ -38,7 +41,7 @@ function settings() {
 			'message'    => 'group api demo',
 			'tags'       => '#vk_api_group',
 			'link'       => '',
-			'dir'        => dirname( __FILE__, 2 ) . '/storage/group/images/',
+			'path'       => dirname( __FILE__, 2 ) . '/storage/group/images/',
 		],
 		// User settings.
 		'user'  => [
@@ -46,7 +49,7 @@ function settings() {
 			'message'  => 'user api demo',
 			'tags'     => '#vk_api_user',
 			'link'     => '',
-			'dir'      => dirname( __FILE__, 2 ) . '/storage/user/images/',
+			'path'     => dirname( __FILE__, 2 ) . '/storage/user/images/',
 		],
 	];
 

@@ -1,11 +1,11 @@
 <?php
 
-require_once( __DIR__ . '/src/Vk.php' );
-require_once( __DIR__ . '/src/WallPost.php' );
+require_once( __DIR__ . '/src/VkApi/Vk.php' );
+require_once( __DIR__ . '/src/MetaStore/Vk/WallPost.php' );
 require_once( __DIR__ . '/settings/settings.php' );
 
 // Loading class.
-$WallPost = new \METASTORE\VkBotPost\WallPost();
+$WallPost = new \METASTORE\Vk\WallPost();
 
 // CMD options.
 $cmdOpt = getopt( 'p:' );

@@ -6,13 +6,12 @@
  * @version: 2.0
  */
 
-namespace METASTORE\VkBotPost;
+namespace VkApi;
 
 // Возвращаемые ошибки https://vk.com/dev/errors
 
 class VkException extends \Exception {
 }
-
 
 class Vk {
 
