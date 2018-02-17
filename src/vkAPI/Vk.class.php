@@ -1,17 +1,16 @@
 <?php
-/*
+
+require_once( __DIR__ . '/VkException.class.php' );
+
+/**
  * Class Vk
+ *
  * @author: Dmitriy Nyashkin
  * @link: https://github.com/fdcore/vk.api
  * @version: 2.0
  */
 
-namespace VkApi;
-
-// Возвращаемые ошибки https://vk.com/dev/errors
-
-class VkException extends \Exception {
-}
+namespace vkAPI;
 
 class Vk {
 

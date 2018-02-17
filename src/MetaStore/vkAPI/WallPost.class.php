@@ -1,8 +1,8 @@
 <?php
 
-namespace MetaStore\Vk;
+namespace MetaStore\vkAPI;
 
-use \VkApi\Vk;
+use \vkAPI\Vk;
 
 class WallPost {
 
