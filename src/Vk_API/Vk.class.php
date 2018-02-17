@@ -10,7 +10,7 @@ require_once( __DIR__ . '/VkException.class.php' );
  * @version: 2.0
  */
 
-namespace vkAPI;
+namespace Vk_API;
 
 class Vk {
 

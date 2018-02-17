@@ -10,7 +10,7 @@
  * @version: 2.0
  */
 
-namespace vkAPI;
+namespace Vk_API;
 
 class VkException extends \Exception {
 

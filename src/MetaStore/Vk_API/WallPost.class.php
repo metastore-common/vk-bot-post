@@ -1,8 +1,8 @@
 <?php
 
-namespace MetaStore\vkAPI;
+namespace MetaStore\Vk_API;
 
-use \vkAPI\Vk;
+use \Vk_API\Vk;
 
 class WallPost {
 
@@ -40,7 +40,7 @@ class WallPost {
 	 * Posting to group wall.
 	 *
 	 * @return bool|mixed|string
-	 * @throws \VkApi\VkException
+	 * @throws \Vk_API\VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function groupWallPost() {
@@ -71,7 +71,7 @@ class WallPost {
 	 * Posting to user wall.
 	 *
 	 * @return bool|mixed|string
-	 * @throws \VkApi\VkException
+	 * @throws \Vk_API\VkException
 	 * -------------------------------------------------------------------------------------------------------------- */
 
 	public function userWallPost() {
