@@ -1,7 +1,5 @@
 <?php
 
-require_once( __DIR__ . '/VkException.class.php' );
-
 /**
  * Class Vk
  *
@@ -11,6 +9,8 @@ require_once( __DIR__ . '/VkException.class.php' );
  */
 
 namespace Vk_API;
+
+require_once( __DIR__ . '/VkException.class.php' );
 
 class Vk {
 
